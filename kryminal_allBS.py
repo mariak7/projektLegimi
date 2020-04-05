@@ -53,66 +53,34 @@ driver.get(url)
 
 #create BS object from the page source
 bs = BS(driver.page_source, 'html.parser')
-#    tutorial_code_soup = tutorial_soup.find_all('div', attrs={'class': 'code-toolbar'})
+
+#w jakimś momencie trzeba pozbyć się COOKIE
+button = driver.find_element_by_xpath('//i[@id="closeCookie"]').click()
+
 
 maxSites = bs.find('ul', {'class':'pagination'})
-maxSites = maxSites.find_all('li')[-2].text
+maxSites = maxSites.find_all('li')[-2].text #dzięki temu dojdzie do końca strony
 print(maxSites)
 resultKryminal = [] #lista z linkami
 
 #########################################################
 #część z pozyskiwaniem linków i iterowaniem do maxSites
 
+maxSites = 5
+for i in range(maxSites):
 
-titles = bs.find_all('a', {'class':'book-title'}) #wymaga poprawki, żeby obciąć ebook i audiobook
+    time.sleep(4) #dostosować do tempa internetu, żeby strona zdążyła się załadować
+    bs = BS(driver.page_source, 'html.parser')
 
-links = ['https://www.legimi.pl' + title['href'] for title in titles]
+    titles = bs.find_all('a', {'class':'book-title'}) 
 
-resultKryminal.append(links)
+    links = ['https://www.legimi.pl' + title['href'] for title in titles]
+ 
+    resultKryminal.append(links)
 
-#for link in links:
-#    print(link)
+    print('jestem w obrocie ', i)
 
-
-button = driver.find_element_by_xpath('//button[@type="submit"]')
-
-#dodać iterowanie po stronach i wydobywanie linków do listy
-
-
-
-
-
-
-
-
-
-
-
-
-#NIE PATRZ NA TO, SPAGHETTI
-
-#chat = driver.find_element_by_xpath('/html/body/div[1]/div/aside[1]/div/div[1]/div[2]/ul/li[2]/button')
-#chat.click()
-
-#time.sleep(2)
-#print(driver.page_source)
-
-#bot_test_chat = driver.find_element_by_xpath('/html/body/div[1]/div/aside[2]/div[2]/div[2]/ul/li[1]/h5')
-#bot_test_chat.click()
-
-#time.sleep(2)
-#print(driver.page_source)
-
-#timestamp = datetime.datetime.now().strftime("%d-%b-%Y (%H:%M:%S)")
-
-#driver.find_element_by_xpath('/html/body/div[1]/div/div[4]/div/div[2]/div[2]/div/div/div[2]/div[1]/textarea').send_keys('Hello I am little bot!\n')
-#time.sleep(0.3)
-#driver.find_element_by_xpath('/html/body/div[1]/div/div[4]/div/div[2]/div[2]/div/div/div[2]/div[1]/textarea').send_keys('I messaged at: ' + timestamp + '\n')
-#time.sleep(0.3)
-#driver.find_element_by_xpath('/html/body/div[1]/div/div[4]/div/div[2]/div[2]/div/div/div[2]/div[1]/textarea').send_keys('I was run by: ' + my_email + '\n')
-
-#time.sleep(10)
-#print(driver.page_source)
+    button = driver.find_element_by_xpath('//a[@class="icon-arrow-right"]').click()
 
 # Close browser:
-#driver.quit()
+driver.quit()
