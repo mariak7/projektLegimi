@@ -8,31 +8,8 @@ from bs4 import BeautifulSoup as BS
 import pandas as pd
 import re
 from datetime import datetime
-#gecko_path = '/usr/local/bin/geckodriver'
-
-#site = 'https://www.legimi.pl/ksiazki/kryminal,g212/?sort=popularity'
 
 
-#headerOne = {'User-Agent': 'Mozilla/5.0'}
-
-#pozyskanie wszystkich linków z podstrony używając BS
-
-#req = Request(site, headers=headerOne)
-
-#html = urlopen(req)
-#bs = BS(html.read(), 'html.parser')
-
-#a class book-title clampBookTitle
-#titles = bs.find_all('a', {'class':'book-title'}) #wymaga poprawki, żeby obciąć ebook i audiobook
-#####button = driver.find_element_by_xpath('//button[@type="submit"]')
-
-#links = ['https://www.legimi.pl' + title['href'] for title in titles]
-
-#for link in links:
-#    print(link)
-
-
-#################################
 
 url = 'https://www.legimi.pl/ksiazki/kryminal,g212/?sort=popularity'
 
@@ -40,13 +17,13 @@ url = 'https://www.legimi.pl/ksiazki/kryminal,g212/?sort=popularity'
 options = webdriver.firefox.options.Options()
 options.headless = False
 
+#not usefull when Windows user
+#gecko_path = '/usr/local/bin/geckodriver'
 ####driver = webdriver.Firefox(options = options, executable_path = gecko_path)
+
 driver = webdriver.Firefox(options = options)
 
-# Actual program:
 driver.get(url)
-
-
 
 ##########################################################
 #pobieranie linków ze strony sterowanej przez Selenium
@@ -79,8 +56,9 @@ for i in range(int(maxSites)):
 
     links = ['https://www.legimi.pl' + title['href'] for title in titles]
  
-    resultKryminal.append(links)
-
+    for link in links:
+       resultKryminal.append(link)
+       
     print('jestem w obrocie ', i)
 
     
