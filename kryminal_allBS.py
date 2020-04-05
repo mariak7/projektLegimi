@@ -66,8 +66,11 @@ resultKryminal = [] #lista z linkami
 #########################################################
 #część z pozyskiwaniem linków i iterowaniem do maxSites
 
-maxSites = 5
-for i in range(maxSites):
+maxSites = 5 #zmienione do testowania
+
+for i in range(int(maxSites)):
+    if(i > 0):
+        button = driver.find_element_by_xpath('//a[@class="icon-arrow-right"]').click()
 
     time.sleep(4) #dostosować do tempa internetu, żeby strona zdążyła się załadować
     bs = BS(driver.page_source, 'html.parser')
@@ -80,7 +83,7 @@ for i in range(maxSites):
 
     print('jestem w obrocie ', i)
 
-    button = driver.find_element_by_xpath('//a[@class="icon-arrow-right"]').click()
+    
 
 # Close browser:
 driver.quit()
