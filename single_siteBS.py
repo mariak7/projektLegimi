@@ -11,7 +11,7 @@ from datetime import datetime
 
 headerOne = {'User-Agent': 'Mozilla/5.0'}
 
-book = pd.DataFrame({'title':[], 'author':[], 'publisher':[], 'category':[], 
+books = pd.DataFrame({'title':[], 'author':[], 'publisher':[], 'category':[], 
         'language':[], 'score':[], 'ebookPrice':[], 'audiobookPrice':[], 'paperPrice':[], 'popularity':[]})
 
 #site = 'https://www.legimi.pl/ebook-narrenturm-tom-1-andrzej-sapkowski,b458095.html'
@@ -31,28 +31,28 @@ try:
 except:
     title = ''
 
-print('This is the title: ', title)
+#print('This is the title: ', title)
 
 try:
     author = bs.find('a', {'class': 'author-link'}).text
 except:
     author = ''
 
-print('This is the author: ', author)
+#print('This is the author: ', author)
 
 try:
     publisher = bs.find('a', {'class':'category-link'}).text
 except:
     publisher = ''
 
-print('This is the publisher: ', publisher)
+#print('This is the publisher: ', publisher)
 
 try:
     category = bs.find_all('a', {'class':'category-link'})[1].text
 except:
     category = ''
 
-print('This is the category: ', category)
+#print('This is the category: ', category)
 
 try:
     language = bs.find('section', {'class':'book-description'}).div.div.ul
@@ -60,7 +60,7 @@ try:
 except:
     language = ''
 
-print('This is the language: ', language)
+#print('This is the language: ', language)
 
 try:
     score = bs.find('span', {'class':'votes-count'}).text
@@ -68,15 +68,15 @@ try:
 except:
     score = ''
 
-print('This is the score: ', score)
+#print('This is the score: ', score)
 
 try:
     ebookPrice = bs.find_all('h4',string = 'ebook')[-1].parent.next_sibling.text
     ebookPrice = re.findall('[0-9]+\,[0-9]+', ebookPrice)[0]
 except:
     ebookPrice = ''
-    
-print('This is the ebook price: ', ebookPrice)
+
+#print('This is the ebook price: ', ebookPrice)
 
 try:
     audiobookPrice = bs.find_all('h4',string = 'audiobook')[-1].parent.next_sibling.text
@@ -84,7 +84,7 @@ try:
 except:
     audiobookPrice = ''
 
-print('This is the audiobook price: ', audiobookPrice)
+#print('This is the audiobook price: ', audiobookPrice)
 
 try:
     paperPrice = bs.find_all('h4',string = 'książka papierowa')[-1].parent.next_sibling.text
@@ -92,7 +92,7 @@ try:
 except:
     paperPrice = ''
 
-print('This is the paperbook price: ', paperPrice)
+#print('This is the paperbook price: ', paperPrice)
 
 try:
     popularity = bs.find('p', {'class':'readers-count-text'}).text
@@ -100,23 +100,17 @@ try:
 except:
     popularity = ''
 
-print('This is the popularity: ', popularity)
+#print('This is the popularity: ', popularity)
 
-#try:
-#    death = bs.find('th',string = 'Died').next_sibling.text
-#    death = re.findall('[0-9]+\s+[A-Za-z]+\s+[0-9]+', death)[0]
-#except:
-#    death = ''
+book = {}
 
-#try:
-#    nationality = bs.find('th',string = 'Nationality').next_sibling.text
-#except:
-#    nationality = ''
+book = {'title':title, 'author':author, 'publisher':publisher, 'category':category, 
+        'language':language, 'score':score, 'ebookPrice':ebookPrice, 
+        'audiobookPrice':audiobookPrice, 'paperPrice':paperPrice, 'popularity':popularity}
 
-#painter = {'name':name, 'birth':birth, 'death':death, 'nationality':nationality}
 
-#d = d.append(painter, ignore_index = True)
+books = books.append(book, ignore_index = True)
 
 #print(d.to_string(index=False)) #print without indexing
 
-#print(d)
+print(books)
