@@ -8,11 +8,9 @@ from bs4 import BeautifulSoup as BS
 import pandas as pd
 import re
 from datetime import datetime
-#gecko_path = '/usr/local/bin/geckodriver'
+gecko_path = '/home/mati_zawodowiec/Downloads/geckodriver-v0.26.0/geckodriver'
 
 #site = 'https://www.legimi.pl/ksiazki/kryminal,g212/?sort=popularity'
-
-
 #headerOne = {'User-Agent': 'Mozilla/5.0'}
 
 #pozyskanie wszystkich linków z podstrony używając BS
@@ -41,7 +39,7 @@ options = webdriver.firefox.options.Options()
 options.headless = False
 
 ####driver = webdriver.Firefox(options = options, executable_path = gecko_path)
-driver = webdriver.Firefox(options = options)
+driver = webdriver.Firefox(options = options, executable_path = gecko_path)
 
 # Actual program:
 driver.get(url)
