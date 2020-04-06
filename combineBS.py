@@ -40,13 +40,13 @@ resultKryminal = [] #lista z linkami
 #########################################################
 #część z pozyskiwaniem linków i iterowaniem do maxSites
 
-maxSites = 1 #zmienione do testowania
+#maxSites = 1 #zmienione do testowania
 
 for i in range(int(maxSites)):
     if(i > 0):
         button = driver.find_element_by_xpath('//a[@class="icon-arrow-right"]').click()
 
-    time.sleep(4) #dostosować do tempa internetu, żeby strona zdążyła się załadować
+    time.sleep(5) #dostosować do tempa internetu, żeby strona zdążyła się załadować
     bs = BS(driver.page_source, 'html.parser')
 
     titles = bs.find_all('a', {'class':'book-title'}) 
@@ -61,7 +61,7 @@ for i in range(int(maxSites)):
 # Close browser:
 driver.quit()
 
-#print(resultKryminal)
+print(resultKryminal)
 
 #Now iterate in the loop
 
@@ -70,15 +70,18 @@ headerOne = {'User-Agent': 'Mozilla/5.0'}
 books = pd.DataFrame({'title':[], 'author':[], 'publisher':[], 'category':[], 
         'language':[], 'score':[], 'ebookPrice':[], 'audiobookPrice':[], 'paperPrice':[], 'popularity':[]})
 
-
+i = 0
 for linkKryminal in resultKryminal:
     site = linkKryminal
-
+    print('Loop for idividual sites iterator ', i)
     req = Request(site, headers=headerOne)
+    try:
+        html = urlopen(req)
+        bs = BS(html.read(), 'html.parser')
+    except:
+        continue
 
-    html = urlopen(req)
-    bs = BS(html.read(), 'html.parser')
-
+    time.sleep(1) 
     try:
         title = bs.find('h1', {'class':'title-text'}).text #wymaga poprawki, żeby obciąć ebook i audiobook
         title = re.split(' ebook', title)[0] #save only title when ebook type
@@ -138,6 +141,8 @@ for linkKryminal in resultKryminal:
     except:
         popularity = ''
 
+    i = i+1 
+    
     book = {}
 
     book = {'title':title, 'author':author, 'publisher':publisher, 'category':category, 
@@ -146,6 +151,8 @@ for linkKryminal in resultKryminal:
 
     books = books.append(book, ignore_index = True)
 
+    books.to_csv('kryminały_result.csv') #save each time to omit problems
+
     #print(books)
 
-books.to_csv('kryminały_result.csv')
+#books.to_csv('kryminały_result.csv')
