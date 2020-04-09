@@ -13,7 +13,7 @@ class Booker(scrapy.Item):
     ebookPrice       = scrapy.Field()
     audiobookPrice   = scrapy.Field()
     paperPrice       = scrapy.Field()
-    PeopleInterested = scrapy.Field()
+    peopleInterested = scrapy.Field()
 
 class LinkListsSpider(scrapy.Spider):
     name = 'legimi_SinglePage'
@@ -22,7 +22,8 @@ class LinkListsSpider(scrapy.Spider):
 
 
     def parse(self, response):
-        item = Booker()
+        item = Booker() #tu będziemy zbierać informacje ze strony
+        #najpierw ścieżki do każdej z informacji
         author_xpath           = '//a[@class="author-link author-noseparator"]/text()'
         title_xpath            = '//h1[@class="title-text"]/text()'
         publisher_xpath        = '//a[@data-reactid="117"]/text()'
@@ -32,7 +33,9 @@ class LinkListsSpider(scrapy.Spider):
         ebookPrice_xpath       = '//p[@data-reactid="16"]/text()'
         audiobookPrice_xpath   = '//p[@data-reactid="20"]/text()'
         paperPrice_xpath       = '//p[@data-reactid="24"]/text()'
-        PeopleInterested_xpath = '//div[@class="now-reading"]/p[@class="readers-count-text"]/text()'
+        peopleInterested_xpath = '//div[@class="now-reading"]/p[@class="readers-count-text"]/text()'
+
+        # wrzucenie informacji do itemu
         item['author']           = response.xpath(author_xpath).extract_first()
         item['title']            = response.xpath(title_xpath).extract_first()
         item['publisher']        = response.xpath(publisher_xpath).extract_first()
@@ -43,5 +46,5 @@ class LinkListsSpider(scrapy.Spider):
         item['audiobookPrice']   = response.xpath(audiobookPrice_xpath).extract_first()
         item['paperPrice']       = response.xpath(paperPrice_xpath).extract_first()
         item['title']            = response.xpath(title_xpath).extract_first()
-        item['PeopleInterested'] = response.xpath(PeopleInterested_xpath).extract_first()
+        item['peopleInterested'] = response.xpath(peopleInterested_xpath).extract_first()
         yield item
