@@ -68,7 +68,7 @@ print(resultKryminal)
 headerOne = {'User-Agent': 'Mozilla/5.0'}
 
 books = pd.DataFrame({'title':[], 'author':[], 'publisher':[], 'category':[], 
-     'score':[], 'ebookPrice':[], 'audiobookPrice':[], 'paperPrice':[], 'popularity':[]})
+     'score':[], 'ebookPrice':[], 'audiobookPrice':[], 'paperPrice':[], 'peopleInterested':[]})
 
 i = 0
 for linkKryminal in resultKryminal:
@@ -130,10 +130,10 @@ for linkKryminal in resultKryminal:
         paperPrice = ''
 
     try:
-        popularity = bs.find('p', {'class':'readers-count-text'}).text
-        popularity = re.findall('[0-9]+', popularity)[0]
+        peopleInterested = bs.find('p', {'class':'readers-count-text'}).text
+        peopleInterested = re.findall('[0-9]+', peopleInterested)[0]
     except:
-        popularity = ''
+        peopleInterested = ''
 
     i = i+1 
     
@@ -141,7 +141,7 @@ for linkKryminal in resultKryminal:
 
     book = {'title':title, 'author':author, 'publisher':publisher, 'category':category, 
              'score':score, 'ebookPrice':ebookPrice, 
-            'audiobookPrice':audiobookPrice, 'paperPrice':paperPrice, 'popularity':popularity}
+            'audiobookPrice':audiobookPrice, 'paperPrice':paperPrice, 'peopleInterested':peopleInterested}
 
     books = books.append(book, ignore_index = True)
 
