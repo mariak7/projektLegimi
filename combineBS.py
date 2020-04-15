@@ -68,7 +68,7 @@ print(resultKryminal)
 headerOne = {'User-Agent': 'Mozilla/5.0'}
 
 books = pd.DataFrame({'title':[], 'author':[], 'publisher':[], 'category':[], 
-        'language':[], 'score':[], 'ebookPrice':[], 'audiobookPrice':[], 'paperPrice':[], 'popularity':[]})
+     'score':[], 'ebookPrice':[], 'audiobookPrice':[], 'paperPrice':[], 'popularity':[]})
 
 i = 0
 for linkKryminal in resultKryminal:
@@ -106,12 +106,6 @@ for linkKryminal in resultKryminal:
         category = ''
 
     try:
-        language = bs.find('section', {'class':'book-description'}).div.div.ul
-        language = language.find_all('li')[2].span.next_sibling.text
-    except:
-        language = ''
-
-    try:
         score = bs.find('span', {'class':'votes-count'}).text
         score = re.findall('[0-5]{1}\,[0-9]', score)[0]
     except:
@@ -146,13 +140,13 @@ for linkKryminal in resultKryminal:
     book = {}
 
     book = {'title':title, 'author':author, 'publisher':publisher, 'category':category, 
-            'language':language, 'score':score, 'ebookPrice':ebookPrice, 
+             'score':score, 'ebookPrice':ebookPrice, 
             'audiobookPrice':audiobookPrice, 'paperPrice':paperPrice, 'popularity':popularity}
 
     books = books.append(book, ignore_index = True)
 
-    books.to_csv('kryminały_result.csv') #save each time to omit problems
+    books.to_csv('kryminały_resultBS.csv') #save each time to omit problems
 
     #print(books)
 
-#books.to_csv('kryminały_result.csv')
+#books.to_csv('kryminały_resultBS.csv')
