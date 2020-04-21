@@ -32,7 +32,7 @@ time.sleep(1)
 
 #element with last page number
 last_page = driver.find_element_by_xpath('//nav/ul/li[5]/a')
-max_number_page = get_text_excluding_children(driver,last_page)
+max_number_page = get_text_excluding_children(driver, last_page)
 
 #current url information
 current_url_info = driver.current_url
