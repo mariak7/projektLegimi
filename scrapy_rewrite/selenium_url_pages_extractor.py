@@ -1,6 +1,7 @@
-##############################################
-##  Legimi - all kryminal pages extraction  ##
-##############################################
+##############################################################
+######  Legimi - all cryminal browse pages extraction  #######
+##############################################################
+
 from selenium import webdriver
 import time
 import re
